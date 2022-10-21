@@ -1,0 +1,111 @@
+.case-description{
+    flex-grow: 3;
+    margin-bottom: 10px;
+    width:inherit;
+    position: relative;
+    width: 100%; 
+    max-width: 100%;
+    padding: 5px;
+    
+    border-style: none;
+    border-radius: 7px !important;
+    background-color: #eeeee4;
+    overflow: hidden;
+    
+}
+
+.case-instructions{
+    flex-grow: 3;
+    width:inherit;
+    position: relative;
+    width: 100%; 
+    max-width: 100%;
+    padding: 5px;
+    border-style: none;
+    border-radius: 7px !important;
+    background-color: #eeeee4;
+    overflow: hidden;
+    
+}
+
+.repository-link{
+    flex-grow: 3;
+    height: 50px;
+    margin-top: 10px;
+    width:inherit;
+    position: relative;
+    width: 100%; 
+    max-width: 100%;
+    padding: 5px;
+    border-style: none;
+    border-radius: 7px !important;
+    background-color: #eeeee4;
+    overflow: hidden;
+    
+}
+
+
+.upload-case-form-wrapper{
+    position: relative;
+    max-width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.upload-case-document{
+    width: 100%;
+}
+
+.upload-case-file-input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor:pointer;
+    padding-top: 100%;
+    background-color: transparent;
+    z-index: 20;
+}
+
+.case-upload-image{
+font-size: 100px !important;
+
+/* margin-left: 33%; */
+margin-top: calc(150px - 50px);
+margin-left: calc(50% - 50px);
+font-weight: thin;
+width: 1px;
+}
+
+.case-file-upload-btn-wrapper{
+    position: relative;
+    top: 10px;
+    padding: 3px;
+    max-width: 100%;
+    height: 50px;
+    border-radius: 7px;
+    background-color: #eeeee4;
+    overflow: hidden !important;
+}
+
+.upload-attach-icon{
+    float:left;
+    margin-top: -1px;
+}
+
+.case-file-upload-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    background-color: transparent;
+}
+
+.upload-styles{
+    padding-left: 10px;
+    padding-right: 10px;
+}

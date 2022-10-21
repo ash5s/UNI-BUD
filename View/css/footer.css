@@ -13,7 +13,13 @@
     justify-content: space-between;
     z-index: 20;
     /* background-color: #2A2E31; */
-    background-color: #c7c7c7;
+    background-color: #8ecaef;
+}
+
+.btn-dark{
+    background-color: #F69C4E!important;
+    border-color: #F69C4E!important;
+    border-style: none !important;
 }
 
 .footer-btns{
@@ -21,6 +27,7 @@
     justify-content: center;
     align-items: center;
     width: 50px;
+    cursor: pointer;
     height: 100%;
     color: #2A2E31;
     /* background-color: aqua; */

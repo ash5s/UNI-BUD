@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+crossorigin="anonymous">
+</script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,44 +12,62 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link rel="stylesheet" href="../View/css/text.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="../Controller/test.js"></script>
+    <!-- <script src="../Controller/getAndPosts.js"></script> -->
+    <script src="../Controller/getAndPosts.js" type="text/javascript"></script>
+    <!-- <script src="../Model/getAndPosts.js"></script> -->
     <link rel="stylesheet" href="../View/css/login-signup.css">
     <link rel="stylesheet" href="../View/css/unibud-banner.css">
     <link rel="stylesheet" href="../View/css/home.css">
+    <link rel="stylesheet" href="../View/css/app-modal.css">
+    <link rel="stylesheet" href="../View/css/upload-case.css">
     <link rel="stylesheet" href="../View/css/footer.css">
     <script src="../View/js/test.js"></script>
-    <script src="../View/js/components.js"></script>
+    <script src="../View/js/solutions.js"></script>
+    <script src="../View/js/appModal.js"></script>
+    <script src="../View/js/login-signup.js"></script>
+    <script src="../View/js/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script>
-        $(document).ready(function(){
-            document.getElementById("home-page-wrapper").innerHTML += caseComponents();
-            document.getElementById("home-page-wrapper").innerHTML += caseComponents();
-            document.getElementById("home-page-wrapper").innerHTML += caseComponents();
-            document.getElementById("home-page-wrapper").innerHTML += caseComponents();
-            document.getElementById("home-page-wrapper").innerHTML += caseComponents();
-        });
+      $(document).ready(function () {
+    
+
+    // check for upload case form submissions
+    $('#upload-case-form').submit(function (e) {
+        // Prevent form submission which refreshes page
+        e.preventDefault();
+        // uploadCase()
+        postFile()
+
+    });
+});
     </script>
-    <title>Uni Bud Home</title>
+    <title>Unibud Home</title>
 </head>
 <body>
-    <div id="home-page-wrapper" class="home-page-wrapper">
-    <div class="banner">UNIBUD</div>
-    <div class="footer">
-        <div class="footer-btns">
-            <span class="material-icons">
-                home
-            </span></div>
-        <div class="footer-btns">
-            <span class="material-icons">
-                add
-            </span>
+    <div id="unibud-app" class="home-page-wrapper">
+      <!-- Note use "section" instead of "page" e.g "home-page" should be "home-section" -->
+      <!-- app model -->
+      <div class="app-modal">
+        <div id="inner-app-modal" class="inner-app-modal">
         </div>
-        <div class="footer-btns">
-            <span class="material-icons">
-                person
-            </span>
+        <div class="app-modal-btn-wrapper">
+          <button type="button" id="app-modal-btn" class="app-modal-btn btn btn-outline-dark">Ok</button>
         </div>
-
-    </div>
+      </div>
+      <!-- end of app model -->
+      <div id="banner-wrapper" class="banner-wrapper"></div>
+      <div id="home-section" class="home-section inner-app-sections"></div>
+      <div id="solutions-section" class="solutions-section inner-app-sections"></div>
+      <div id="upload-case-section" class="upload-case-section inner-app-sections"></div>
+      <div id="upload-solutions-section" class="upload-solutions-section inner-app-sections"></div>
+      <div id="profile-section" class="profile-section inner-app-sections"></div>
+      <div id="login-signup-wrapper" class="login-wrapper inner-app-sections"></div>
+      <div id="footer-wrapper" class="footer-wrapper"></div>
     </div>
 </body>
 </html>
+
+

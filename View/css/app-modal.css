@@ -1,0 +1,36 @@
+.app-modal{
+    max-width: 600px;
+    /* margin-left: 10px;
+    margin-right: 10px; */
+    display: none;
+    padding: 10px;
+    height: 300px;
+    position: fixed;
+    margin: auto;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    z-index: 20;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.inner-app-modal{
+    width: 100%;
+    height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+
+.app-modal-btn-wrapper{
+    padding-top: 10px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: end;
+}
