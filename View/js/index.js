@@ -1,4 +1,4 @@
-// array
+// array used for testing during development
 const unibudCasesxxx = [
     { "profileImage":"pexels-elvis-2528118.jpg", "businessName": "XYZ Marketing solutions", "time": "5 days ago", "caseFileName": "pexels-elvis-2528118.jpg", "instructions": "Menu not working properly" },
     { "profileImage": "pexels-elvis-2528118.jpg", "businessName": "XYZ Marketing solutions", "time": "5 days ago", "caseFileName": "pexels-elvis-2528118.jpg", "instructions": "Menu not working properly" },
@@ -51,20 +51,19 @@ if (profileImage == null) {
 
 }
 
-
+// initiate the section variabel
 var section = '';
-
 $(document).ready(function () {
 
     // get user type upload-btn
-    
-    
-    
-    // getCase("test@test.com")
-
+    userType = localStorage.getItem("userType");
+    // get the current section(page) of the app runing
     appSection = localStorage.getItem("appSection");
+    // get cases stored in local storage if any
     caseArr = localStorage.getItem("cases");
 
+    // if there was no previous section or page saved then run
+    // the home page
     if (appSection==null) {
         appSection = "home";
         sectionTracker(appSection)
@@ -72,93 +71,82 @@ $(document).ready(function () {
 
     }
 
-    // get cases
-    getCases();
-    caseArr = localStorage.getItem("cases");
-    data = JSON.parse(caseArr)
-    // console.log(whichIsVisible(cloudData))
-    
-    for (var i = 0; i < data.length; i++) {
-        var obj = data[i];
-        console.log(JSON.stringify(obj.caseEmail))
-    }
-
-    data.forEach(function (unibudCase) { 
-        console.log(JSON.stringify(obj.caseEmail))
-        console.log(JSON.stringify(unibudCase.caseImage))
-        console.log(JSON.stringify(unibudCase.caseDescription))
-        console.log(JSON.stringify(unibudCase.dateTime))
-    });
-        
-
-    // let bannerWrapper = document.getElementById("banner-wrapper");
-    let unibudApp = document.getElementById("unibud-app");
-    // let homeSection = document.getElementById("home-section");
-    let solutionsSection = document.getElementById("solutions-section");
-    // let uploadCaseSection = document.getElementById("upload-case-section");
-    let uploadSolutionsSection = document.getElementById("upload-solutions-section");
-    // let footerWrapper = document.getElementById("footer-wrapper");
-
-    // $(".upload-case-section").show();
-
-    // app('home','placeholder')//instanciate the app
+    // run the App on page load
     app(appSection,'placeholder')//instanciate the app
 
 });
 
+// used for development
+function testApp() {
+    alert('its working')
+}
 
-// (bannerWrapper,homeSection,solutionsPage,uploadCasePage,uploadSolutionsPage,footerWrapper)
-
-function app(section,data) {
+// the funtion selects and renders what section/page of the 
+// app is to display/run or open based on user input, it has two 
+// parameters which are:
+// the "section" and the "data" being passed to the funtions 
+// runing the pages or sections.
+function app(section, data) {
     
+    // track all pages eccept for login and signup
     if (section != "runLoginSignup") {
-        sectionTracker(section)
+        sectionTracker(section)//track all pages
     }
-    // app banner
+    // render the app banner 
     runBanner();
-    // select what section of app to run at any given time
+    // select what section of app to render at any given time
     switch (section) {
         case "home":
-          //home section loop
+          //render the home section loop
             runHomeSection(data);
           break;
         case "solutions":
+            // render the solutions
             runSolutions(data);
           break;
         case "uploadCase":
+            // render the case upload page
             runCaseUpload(data);
             break;
-            case "profile":
+        case "profile":
+            // render the profile page
                 runProfile(data);
-              break;
+            break;
         case "uploadSolutions":
-            runHomeSectionxx();
-          break;
+            // render the slolutions upload page
+            runSolutionsUpload();
+            break;
         case "runLoginSignup":
+            // render the login page
             runLoginSignup();
       }
-    // app footer
+    // render the footer
     runFooter();
 }
 
-// save cloud data to local storage
+// save case data to local storage
 function saveCasesToLocalStorage(cases) {
     localStorage.setItem("cases", cases);
 }
 
-// save cloud data to local storage
+// save profile data to local storage
 function saveProfileToLocalStorage(profile) {
     localStorage.setItem("profile", profile);
 }
 
+// next variable user to pass what happens next after a message
+// display through the app modal
 var nextSection = "";
-// display model
+// display app model model, app nodal is used to reder status
+// updates to users  
 function showModal(content, action) {
     nextSection = action;
     $(".app-modal").show();
+    // dispaly the data in the content variable in the modal
     document.getElementById("inner-app-modal").innerHTML = content;
 }
 
+// track the current page or section the user is browsing
 function sectionTracker(appSection) {
     // set section
     localStorage.setItem("appSection", appSection);//"sectinonName":"section value"
@@ -194,6 +182,7 @@ function caseRepositoryLinkTracker(repositoryLink) {
     localStorage.setItem("caseRepositoryLink", repositoryLink);//"sectinonName":"section value"
 }
 
+// hides and shows the pages according to input
 function hideShowSectionsAccordingly(hide, show) {
 
     // remove display flex from login-signup-wrapper so it can be set to display:none or hidden
@@ -202,72 +191,86 @@ function hideShowSectionsAccordingly(hide, show) {
     $("#" + show).show();
 }
 
-
+// function renders the home section
 function runHomeSection(sectionData) {
 
-    hideShowSectionsAccordingly("placeholder",'home-section');//only show the home section
-    // get home section element
-    caseArr = localStorage.getItem("cases");
-    const unibudCases = JSON.parse(caseArr)
-    var counter = 0;
-    //home page loop through cases//
-    unibudCases.forEach(function (unibudCase) {
-        counter++;
-        // get profile images and profile names
-        getBusiness(unibudCase,"home-section",counter)
-    });
+    if (sectionData.initialLoad == 1) {
+        hideShowSectionsAccordingly("placeholder", 'home-section');//only show the home section
+
+    } else {
+
+        hideShowSectionsAccordingly("placeholder", 'home-section');//only show the home section
+        // get cases
+        getCases();
+       
+    }
 }
 
-
+// renders banner
 function runBanner() {
     let bannerWrapper = document.getElementById("banner-wrapper");
     bannerWrapper.innerHTML += bannerComponent();//banner
 }
-
+// renders footer
 function runFooter() {
     let footerWrapper = document.getElementById("footer-wrapper");
     footerWrapper.innerHTML += footerComponent();//footer
 }
-
+// renders case upload page
 function runCaseUpload() {
     hideShowSectionsAccordingly("placeholder",'upload-case-section');//only show the home section
     let uploadCaseSection = document.getElementById("upload-case-section");
     uploadCaseSection.innerHTML = caseUploadComponent();
     userType = localStorage.getItem("userType");
-    if (userType == "student") {
-        $(".case-upload-btn").hide();
-    } else {
-        $(".solutions-upload-btn").hide();
-    }
 }
-
+// renders the profile page
 function runProfile() {
     hideShowSectionsAccordingly("placeholder",'profile-section');//only show the home section
     let profileSection = document.getElementById("profile-section");
     profileSection.innerHTML = profileSectionComponent();//profile
 }
-
+// renders the solutions page
 function runSolutionsUpload() {
-    hideShowSectionsAccordingly("placeholder",'upload-case-section');//only show the home section
+    hideShowSectionsAccordingly("placeholder",'upload-solutions-section');//only show the home section
     let uploadSolutionsSection = document.getElementById("upload-solutions-section");
     uploadSolutionsSection.innerHTML = solutionsUploadComponent();//footer
 }
 
-// run the individual case
+// run an individual case in the solutions page, this is the case
+// on top of the solutions page
 function runSolutionsCase(caseObject) {
-    solutions = "solutions-section";
+    appSection = "solutions-section";
     counter = 1;
-    getBusiness(caseObject[0],solutions,counter)
+    getBusiness(caseObject[0],appSection,counter)
 }
 
-// solutionsComponent
-function runSolutions(userEmailId) {
-    // get the clicked case
-    getCase(userEmailId);
-    // hide all the other sections and only show solutions section
-    hideShowSectionsAccordingly("placeholder",'solutions-section');//only show the home section
-}
+// function renders all the solutions related to the case
+function runSolutions(caseId) {
+    
+    if (caseId == "placeholder") {
+        // get case ID from local storage
+        id = localStorage.getItem("case");
+        if (id) {
+            // do nothing
+        } else {
+            // if case ID isnt set go back to home page
+            app('home',{initialLoad:0})
+        }
 
+    } else {
+        // set case
+        localStorage.setItem("case", caseId); 
+        id = caseId;
+    }
+
+    // get the clicked case, if case is set
+    getCase(id);
+
+    // hide all the other pages or sections and only show solutions section.
+    hideShowSectionsAccordingly("placeholder",'solutions-section');//only solution section
+
+}
+// render login
 function runLoginSignup() {
     
     hideShowSectionsAccordingly("placeholder", 'login-signup-wrapper');
@@ -276,18 +279,25 @@ function runLoginSignup() {
     loginSignupWrapper.innerHTML = loginSignupComponent();//footer
 }
 
-// banner component
+// renders the banner component when called
 function bannerComponent() {
-    return`<div class="banner">UNIBUD</div>`
+    return `<div class="banner" onclick="logOut()">
+    <div class="logout-button">
+    <span class="material-symbols-outlined">
+        power_settings_new
+    </span>
+    </div>
+    UNIBUD
+    </div>`
 }
 
 // case component
 function caseComponent(caseObject) {
-    return `<div id="case-container${caseObject.counter}" class="case-container" onclick="transformIntoSolutionPage('${caseObject.businessEmail}')">
+    return `<div id="case-container${caseObject.counter}" class="case-container" onclick="transformIntoSolutionPage('${caseObject.unibudCase.id}')">
             <div class="image-video-container">
                 <div class="user-profile-wrapper">
                     <div class="business-profile-pic">
-                        <object class="case-image" data="../View/uploads/${caseObject.businessProfileImage}"></object>
+                        <object class="case-image" data="${baseURL}/View/uploads/${caseObject.businessProfileImage}"></object>
                     </div>
                     <div class="business-name">
                     ${caseObject.businessName}
@@ -296,7 +306,7 @@ function caseComponent(caseObject) {
                         ${String((caseObject.unibudCase.dateTime))}
                     </div>
                 </div>
-                <object class="case-image" data="../View/uploads/${caseObject.unibudCase.caseImage}"></object>
+                <object class="case-image" data="${baseURL}/View/uploads/${caseObject.unibudCase.caseImage}"></object>
             </div>
         <div class="case-instructions solution-">
             <span class="fixed-height case-subject">${caseObject.unibudCase.caseDescription }</span>
@@ -304,67 +314,13 @@ function caseComponent(caseObject) {
     </div>`
 }
 
+// renders solutions component when called.
 function solutionsComponent(caseObject) {
-    return`<div id="case-container xxxx" class="case-container">
-            <div class="image-video-container">
-                <div class="user-profile-wrapper">
-                    <div class="business-profile-pic">
-                        <object class="case-image" data="../View/uploads/xxxx"></object>
-                    </div>
-                    <div class="business-name">
-                    
-                    </div>
-                    <div class="date-posted">
-                        xxxxx
-                    </div>
-                </div>
-                <object class="case-image" data="../View/uploads/xxxxx"></object>
-            </div>
-        <div class="case-instructions solutions-case-instructions" >
-            <div id="solutions-case1" class="solutions-comments-wrapper" onclick="showDetails(${1})">
-                <div class="solutions-comments-label">
-                    Instructions
-                </div>
-                <div class="solutions-comments-icon">
-                    <span class="material-icons">
-                        unfold_more
-                    </span>
-                </div>
-            </div>
-            <div id="inner-instructions-container1" class="inner-instructions-container">
-                xxxxx
-            </div>
-        </div>
-        <div>
-            <div class="upload-solutions-wrapper solutions-case-instructions">
-                <div class="solutions-comments-wrapper">
-                    <div class="solutions-comments-label solutions-label">
-                        Solutions
-                    </div>
-                    <div class="upload-solution-btn-wrapper" onclick="checkSessionBeforeCaseUpload()">
-                        <span>
-                            Upload solution
-                        </span>
-                        <span class="material-icons">
-                            add
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="solutions-container" class="solutions-container">
-        xxxxx
-        </div>
-    </div>`
-}
-
-// ================================
-function solutionsComponentxx(caseObject) {
     return`<div id="case-container${caseObject.counter}" class="case-container">
             <div class="image-video-container">
                 <div class="user-profile-wrapper">
                     <div class="business-profile-pic">
-                        <object class="case-image" data="../View/uploads/${caseObject.businessProfileImage}"></object>
+                        <object class="case-image" data="${baseURL}/View/uploads/${caseObject.businessProfileImage}"></object>
                     </div>
                     <div class="business-name">
                     ${caseObject.businessName}
@@ -373,7 +329,7 @@ function solutionsComponentxx(caseObject) {
                         ${String((caseObject.unibudCase.dateTime))}
                     </div>
                 </div>
-                <object class="case-image" data="../View/uploads/${caseObject.unibudCase.caseImage}"></object>
+                <object class="case-image" data="${baseURL}/View/uploads/${caseObject.unibudCase.caseImage}"></object>
             </div>
         <div class="case-instructions solutions-case-instructions" >
             <div id="solutions-case1" class="solutions-comments-wrapper" onclick="showDetails(${1})">
@@ -396,7 +352,7 @@ function solutionsComponentxx(caseObject) {
                     <div class="solutions-comments-label solutions-label">
                         Solutions
                     </div>
-                    <div class="upload-solution-btn-wrapper" onclick="checkSessionBeforeCaseUpload(${caseObject.unibudCase.id})">
+                    <div class="upload-solution-btn-wrapper" onclick="setCaseId(${caseObject.unibudCase.id})">
                         <span>
                             Upload solution
                         </span>
@@ -412,23 +368,23 @@ function solutionsComponentxx(caseObject) {
         </div>
     </div>`
 }
-// ================================
 
-function solutionComponent(caseObject) {
-    return`<div id="case-container${caseObject.counter}" class="solution-container">
+// renders solution component when called.
+function solutionComponent(solutionObject) {
+    return`<div id="case-container${solutionObject.counter}" class="solution-container">
             <div class="image-video-container">
                 <div class="user-profile-wrapper">
                     <div class="business-profile-pic">
-                        <object class="case-image" data="../View/uploads/${caseObject.businessProfileImage}"></object>
+                        <object class="case-image" data="${baseURL}/View/uploads/${solutionObject.profileImage}"></object>
                     </div>
                     <div class="business-name">
-                    ${caseObject.businessName}
+                    ${solutionObject.unibudSolution.firstName+" "+solutionObject.educationInstituteName}
                     </div>
                     <div class="date-posted">
-                        ${String((caseObject.unibudCase.dateTime))}
+                        ${String((solutionObject.unibudSolution.dateTime))}
                     </div>
                 </div>
-                <object class="case-image" data="../View/uploads/${caseObject.unibudCase.caseImage}"></object>
+                <object class="case-image" data="${baseURL}/View/uploads/${solutionObject.unibudSolution.solutionsImage}"></object>
             </div>
         <div class="solutions-instructions solutions-case-instructions">
             <div id="solutions-comments-wrapper" class="solutions-comments-wrapper">
@@ -442,78 +398,20 @@ function solutionComponent(caseObject) {
                 </div>
             </div>
             <div id="inner-instructions-container" class="inner-instructions-container">
-                ${caseObject.unibudCase.caseInstructions}
+                ${solutionObject.unibudSolution.solutionsInstructions}
             </div>
         </div>
     </div>`
 }
 
-function caseComponentXXX(unibudCase) {
-    return`<div class="case-container">
-            <div class="image-video-container">
-                <div class="user-profile-wrapper">
-                    <div class="business-profile-pic">
-                        <object class="case-image" data="../View/uploads/${unibudCase.caseImage}"></object>
-                    </div>
-                    <div class="business-name">
-                    ${unibudCase.profileName}
-                    </div>
-                    <div class="date-posted">
-                        ${unibudCase.dateTime}
-                    </div>
-                </div>
-                <object class="case-image" data="../View/uploads/${unibudCase.caseImage}"></object>
-            </div>
-        <div class="case-instructions">
-            <span class="case-subject">${unibudCase.instructions}</span>
-        </div>
-    </div>`
-}
-
-
-
+// renders the case upload component when called.
 function caseUploadComponent(unibudCase) {
     return `
     <form id="upload-case-form" method="Post" enctype="multipart/form-data">
         <div class="upload-case-container case-upload-image-cont case-container">
                 <input class="upload-case-document upload-case-file-input case-image-video" type="file" name="imageUpload" id="imageUpload" onchange="setIamgeCaseFile(event)">
-                <input type="hidden" id="temporarily-store-case-image-name" name="temporarily-store-case-image-name" value="">   
-                <object class="case-image" data="../View/uploads/${uploadCaseImage}">
-                    <span class="case-upload-image material-symbols-outlined">
-                        center_focus_strong
-                    </span>
-                </object>        
-                </div>
-            <div class="upload-case-form-wrapper">
-                    <textarea id="case-description"  rows="2" class="upload-styles case-description" name="case-description" placeholder="Describe the issue"></textarea>
-                    <br>
-                    <textarea id="case-instructions"  rows="3" class="upload-styles case-instructions" name="case-instructions" placeholder="What needs to be done?"></textarea>
-                    
-                    <input type="text" id="repository-link" class="upload-styles repository-link"  name="repository-link" value="" placeholder="Enter the project's repository link">
-                    <br>
-                    <div class="upload-styles case-file-upload-btn-wrapper">
-                    <span class="upload-attach-icon material-icons">
-                        attachment
-                    </span> Attache a file: 
-                    <input class="upload-case-document case-file-upload-btn" type="file" name="fileupload" id="fileupload" onchange="setCaseFile(event)">
-                    <input type="hidden" id="temporarily-store-case-file-name" name="temporarily-store-case-file-name" value="">
-                    </div>
-                    <br>
-                    <button type="button" name="upload-case" id="upload-btn" onclick="saveCase()" class="case-upload-btn btn btn-dark">Upload Case</button>
-                    <button type="button" name="upload-case" id="upload-btn" onclick="saveSolution()" class="solutions-upload-btn btn btn-dark">Upload Solutions</button>
-                    <div name="upload-case" onclick="logOut()" >logout</div>
-            </div>
-        </form>`;
-
-}
-
-function caseUploadComponentXXXXX(unibudCase) {
-    return `
-    <form id="upload-case-form" method="Post" enctype="multipart/form-data">
-        <div class="upload-case-container case-upload-image-cont case-container">
-                <input class="upload-case-document upload-case-file-input case-image-video" type="file" name="imageUpload" id="imageUpload" onchange="setIamgeCaseFile(event)">
                 <input type="hidden" id="temporarily-store-case-image-name" name="temporarily-store-case-image-name" value="${uploadCaseImage}">   
-                <object class="case-image" data="../View/uploads/${uploadCaseImage}">
+                <object class="case-image" data="${baseURL}/View/uploads/${uploadCaseImage}">
                     <span class="case-upload-image material-symbols-outlined">
                         center_focus_strong
                     </span>
@@ -535,29 +433,27 @@ function caseUploadComponentXXXXX(unibudCase) {
                     </div>
                     <br>
                     <button type="button" name="upload-case" id="upload-btn" onclick="saveCase()" class="case-upload-btn btn btn-dark">Upload Case</button>
-                    <button type="button" name="upload-case" id="upload-btn" onclick="saveSolution()" class="solutions-upload-btn btn btn-dark">Upload Solutions</button>
-                    <div name="upload-case" onclick="logOut()" >logout</div>
             </div>
         </form>`;
-
 }
 
+// renders the solutions upload component when called.
 function solutionsUploadComponent(unibudCase) {
     return `
     <form id="upload-case-form" method="Post" enctype="multipart/form-data">
         <div class="upload-case-container case-upload-image-cont case-container">
                 <input class="upload-case-document upload-case-file-input case-image-video" type="file" name="imageUpload" id="imageUpload" onchange="setIamgeCaseFile(event)">
                 <input type="hidden" id="temporarily-store-case-image-name" name="temporarily-store-case-image-name" value="${uploadCaseImage}">   
-                <object class="case-image" data="../View/uploads/${uploadCaseImage}">
+                <object class="case-image" data="${baseURL}/View/uploads/${uploadCaseImage}">
                     <span class="case-upload-image material-symbols-outlined">
                         center_focus_strong
                     </span>
                 </object>        
                 </div>
             <div class="upload-case-form-wrapper">
-                    <textarea id="case-description"  rows="2" class="upload-styles case-description" name="case-description" placeholder="Describe the issue">${caseUploadDescription}</textarea>
+                    <textarea id="case-description"  rows="2" class="upload-styles case-description" name="case-description" placeholder="Describe your solution">${caseUploadDescription}</textarea>
                     <br>
-                    <textarea id="case-instructions"  rows="3" class="upload-styles case-instructions" name="case-instructions" placeholder="What needs to be done?">${caseUploadInstruction}</textarea>
+                    <textarea id="case-instructions"  rows="3" class="upload-styles case-instructions" name="case-instructions" placeholder="Tell us what you have done">${caseUploadInstruction}</textarea>
                     
                     <input type="text" id="repository-link" class="upload-styles repository-link"  name="repository-link" value="${caseRepositoryLink}" placeholder="Enter the project's repository link">
                     <br>
@@ -569,52 +465,56 @@ function solutionsUploadComponent(unibudCase) {
                     <input type="hidden" id="temporarily-store-case-file-name" name="temporarily-store-case-file-name" value="${caseFileUpload}">
                     </div>
                     <br>
-                    <button type="button" name="upload-case" onclick="saveCase()" class="btn btn-dark">Upload Case</button>
-                    <div name="upload-case" onclick="logOut()" >logout</div>
+                    <button type="button" name="upload-case" id="upload-btn" onclick="saveSolution()" class="solutions-upload-btn btn btn-dark">Upload Solutions</button>
             </div>
         </form>`;
-
 }
 
+// renders the profile section component when called.
 function profileSectionComponent() {
     return `
     <div class="profile-banner">
         <div class="profile-pic">
         
-        <object class="entity-profile-image" data="../View/uploads/${profileImage}"></object>
+        <object class="entity-profile-image" data="${baseURL}/View/uploads/${profileImage}"></object>
         <input class="entity-profile-pic" type="file" name="entityProfileImage" id="entityProfileImage" onchange="setProfileIamge(event)">
             <input type="hidden" id="temporarily-store-profile-image-name" name="temporarily-store-profile-image-name" value="${profileImage}"> 
         </div>
     </div>
     <div class="txt-inputs-wrapper">
         <br>
-        <input type="text" id="business-organization-name" class="business-organization-name entity-profile-inputs upload-styles "  name="business-organization-name" value="" placeholder="Business organization name">
-        <br>
-        <input type="text" id="education-institute-name" class="education-institute-name entity-profile-inputs upload-styles "  name="education-institute-name" value="" placeholder="Education institute name">
+        <!----<input type="text"  class="business-organization-name entity-profile-inputs upload-styles "   value="" placeholder="Business organization name">
+        
+        <br>-->
+        <input type="text" ${userType=="student" ? 'name="education-institute-name" id="education-institute-name" ' : ' id="business-organization-name" name="business-organization-name" '} class="education-institute-name entity-profile-inputs upload-styles "   value="" placeholder="${userType == "student" ? 'Education institute name' : 'Business organization name'}">
+        
+        
         <br>
         <textarea id="entity-description"  rows="2" class="entity-profile-inputs upload-styles entity-description" name="entity-description" placeholder="Describe Your self or your business"></textarea>
 
         <div class="save-profile-wrapper">
-        <button type="button" name="save-profile" onclick="saveBusiness()" class="save-profile btn btn-dark">Save profile</button>
+        <button type="button" name="save-profile" ${userType=="student" ? 'onclick="saveStudent()"' : 'onclick="saveBusiness()"'} class="save-profile btn btn-dark">Save profile</button>
+        
         </div>
     </div>
     `
 }
 
-// app footer component
+// renders the footer section component when called.
 function footerComponent() {
     return`
     <div class="footer">
         <div class="footer-btns" onclick="app('home',{initialLoad:1})">
             <span class="material-icons">
                 home
-            </span></div>
+            </span>
+        </div>
         <div class="footer-btns">
-            <span class="material-icons" onclick="checkSessionBeforeCaseUpload(0)">
+            <span class="material-icons" onclick="checkSessionBeforeUpload(0)">
                 add
             </span>
         </div>
-        <div class="footer-btns" onclick="app('profile',{initialLoad:1})" >
+        <div class="footer-btns" onclick="app('profile',{initialLoad:0})" >
             <span class="material-icons">
                 person
             </span>
@@ -623,6 +523,7 @@ function footerComponent() {
     </div>`
 }
 
+// renders the login and signup component when called.
 function loginSignupComponent() {
     return `
     <div class="login-input-container">
@@ -640,23 +541,23 @@ function loginSignupComponent() {
                 <div class="signup-label" >Signup</div>
                 <input class="login-text-inputs left-margin signup-inputs" type="text" id="first-name" name="first-name" value="" placeholder="First Name" required>
                 <input class="login-text-inputs signup-inputs" type="text" id="last-name" name="last-name" value="" placeholder="Last Name" required><br>
-                <input class="login-text-inputs left-margin signup-inputs" type="text" id="name-of-organisation" value="" name="name-of-organisation" placeholder="Name of Organisation" required>
-                <input class="login-text-inputs signup-inputs" type="email" id="email" name="email" value="" placeholder="Email" required><br>
-                <input class="login-text-inputs left-margin signup-inputs" type="password" id="pass-word" name="password" value="" placeholder="password" required>
-                <input class="login-text-inputs signup-inputs" type="text" id="website" name="website" value="" placeholder="Website" required><br>
-                <input class="login-text-inputs left-margin signup-inputs" type="text" id="country" name="country" value="" placeholder="Country" required>
-                <input class="login-text-inputs signup-inputs" type="text" id="city" name="city" value="" placeholder="City" required><br>
-                <input class="login-text-inputs left-margin signup-inputs" type="text" id="suburb" name="suburb" value="" placeholder="Suburb" required>
-                <input class="login-text-inputs signup-inputs" type="text" id="street-address" value="" name="street-address" placeholder="Street Address" required><br>
-                <input class="login-text-inputs left-margin signup-inputs" type="text" id="post-code" name="post-code" value="" placeholder="Post Code">
-                <select class="login-text-inputs signup-inputs" name="user-type" id="user-type">
-                <option value="student">Select account type </option>
-                <option value="business">Business</option>
-            <option value="student">Student</option>
-        </select><br>
-                <button class="login-text-inputs signup-btns left-margin signup-inputs" type="button" onclick="signup()">Signup</button>
+                <input class="login-text-inputs left-margin signup-inputs" type="email" id="email" name="email" value="" placeholder="Email" required>
+                <input class="login-text-inputs signup-inputs" type="password" id="pass-word" name="password" value="" placeholder="password" required><br>
+                <input class="login-text-inputs left-margin signup-inputs" type="text" id="website" name="website" value="" placeholder="Website" required>
+                <input class="login-text-inputs signup-inputs" type="text" id="business-or-university-name" name="business-or-university-name" value="" placeholder="business or university name" required><br>
+                <input class="login-text-inputs left-margin signup-inputs" type="text" id="business-or-student-about" name="business-or-student-about" value="" placeholder="business or student about" required>
+                <input class="login-text-inputs signup-inputs" type="text" id="country" name="country" value="" placeholder="Country" required><br>
+                <input class="login-text-inputs left-margin signup-inputs" type="text" id="city" name="city" value="" placeholder="City" required>
+                <input class="login-text-inputs signup-inputs" type="text" id="suburb" name="suburb" value="" placeholder="Suburb" required><br>
+                <input class="login-text-inputs left-margin signup-inputs" type="text" id="street-address" value="" name="street-address" placeholder="Street Address" required>
+                <input class="login-text-inputs signup-inputs" type="text" id="post-code" name="post-code" value="" placeholder="Post Code"><br>
+                <select class="login-text-inputs left-margin signup-inputs" name="user-type" id="user-type">
+                    <option value="student">Select account type </option>
+                    <option value="business">Business</option>
+                    <option value="student">Student</option>
+                </select>
+                <button class="login-text-inputs signup-btns left-margin signup-inputs" type="button" onclick="signup()">Signup</button><br>
                 <button class="login-text-inputs signup-btns signup-inputs" type="button" onclick="openLogin()">Login</button>
-                
               </form>
         </div>`;
 }

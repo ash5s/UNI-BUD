@@ -1,14 +1,11 @@
 
-$(document).ready(function () {
-    // $("#case-container"+element).hide();
-    // $(".case-container").click(function(){
-    //     $(".case-container").addClass("solutions-section-layout");
-    // });
-});
-
-function transformIntoSolutionPage(userEmailId) {
-    app('solutions', userEmailId);
-}
+// function transformIntoSolutionPage(id) {
+//     // open solutions page by calling the "app()" functins with
+//     //two parameters the name of the page or section to open 
+//     //and the data being passed to that section or page
+//     alert(id)
+//     app('solutions', id);
+// }
 
 function showDetails(id) {
     $("#inner-instructions-container"+id).toggle();

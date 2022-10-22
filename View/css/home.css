@@ -177,12 +177,16 @@
     align-items: center;
     width:100px;
     height: 60px;
-    right: 0;
+    right: 20px;
+}
+
+.testapp{
+    background-color: red;
 }
 
 .case-subject{
-    margin-left: 30px;
-    font-size: 24px; 
+    margin-left: 0;
+    font-size: 17px; 
 }
 
 .fixed-height{

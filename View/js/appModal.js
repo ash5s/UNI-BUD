@@ -7,4 +7,6 @@ $(document).ready(function(){
         
         $(".app-modal").hide();
     });
-  });
+});
+  
+
